@@ -1,7 +1,3 @@
-/*
- *  Sample code for getting Second Largest Input
- *  Course: CS 500
- */
 public class SecondLargest {
 
 		public static void main(String[] args) {
@@ -11,10 +7,10 @@ public class SecondLargest {
 				System.out.println("Not enough input!");
 			}
 			
-			double max = Double.parseDouble(args[0]);
-			double sec_max = max;
+			double max = Double.MIN_VALUE;
+			double sec_max = Double.MIN_VALUE;
 			
-			for (int i = 1; i < args.length; i++)  // go through all the inputs, find the maximum and minimum
+			for (int i = 0; i < args.length; i++)  // go through all the inputs, find the maximum and minimum
 			{
 				double current = Double.parseDouble(args[i]);
 				
