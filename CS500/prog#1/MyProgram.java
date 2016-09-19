@@ -1,4 +1,3 @@
-package Prog1;
 /*
  * CS500: Sample solution for Programming Assignment 1
  */
