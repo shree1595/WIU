@@ -1,49 +1,55 @@
-.data
-arr1:  .word   0:3         # "array" of words to contain fib values
-size: .word  4                       # size of "array" (agrees with array declaration)
-space: .asciiz " "
-headprint: .asciiz   "Please enter the numbers: "
-headenter: .asciiz 		"The values in arr1 are printed out in order as: "
-.text
-      la   $s0, arr1        # load address of array
-      la   $s5, size        # load address of size variable
-      lw   $s5, 0($s5)      # load array size
-      
-      la $a0, headprint    #print the enter msg
-      li $v0, 4
-      syscall
- 
-      add $a0, $s0, $0    
-      add $a1, $s5, $0        
+.data 
+   	printmsg: .asciiz "please enter a number:\n"
+   	prompt: .asciiz " "  
+   	arr: .word 0:4   # array arr
+   	size: .word 5
+.text  
+  	la $s0, arr       # load address of arr to s0
+  	la $s1, size      # load address of size to s1
+  	lw $s2, 0($s1)    # load value of size to s2
+  
+  	add $a1, $s0, $0  # copy $s0 to a1
+  	add $a2, $s2, $0  # copy s2 to a2
+  	jal readinput     # call readinput function
+  
+  	add $a1, $s0, $0  # copy $s0 to a1
+  	add $a2, $s2, $0  # copy s2 to a2
+  	jal printinput    # call readinput function
+  
+  	li $v0, 10        # terminate the program
+  	syscall
 
- # lines 21 - 29 are to read user's input
-input: slti $t0, $a1, 1    
-       bne $t0, $zero, exitinput
-       li $v0, 5
-       syscall
-       sw  $v0, ($a0)
-       addi $a0, $a0, 4
-       addi $a1, $a1, -1
-       j input        
-             
-#  lines 31 - 48 are to print the array                       
-exitinput: la   $a0, headenter # print the head string
-      li   $v0, 4              # specify Print string service
-      syscall
-loop: slti $t1, $s5, 1      # check if reach the bound 
-      bne $t1, $zero, exit   
-      lw  $a0, ($s0)        # load the value at $s0
-      li $v0, 1             # specify Print integer service 
-      syscall  
-      
-      la   $a0, space      # load  the  space  
-      li   $v0, 4 	   # specify Print string service
-      syscall
-              
-      addi $s0, $s0, 4    # next word     
-      addi $s5, $s5, -1   # decrease size
-       
-      j loop              # jump to loop
-                          # The program is finished. Exit.
-exit: li   $v0, 10          # system call for exit
-      syscall               # Exit!
+# function to read number from console  	
+readinput: 	slti $t0, $a2, 1  # if (a2 < 1) go end
+           	bne $t0, $0, end  
+           	
+  	la $a0, printmsg  # print the message
+  	li $v0, 4
+  	syscall
+  
+  	li $v0, 5         # read one number from console
+  	syscall
+  
+  	sw $v0, 0($a1)    # store into arr[i]
+  	addi $a1, $a1, 4  # increase address of arr by 4
+  	addi $a2, $a2, -1 # decrease a2 by 1   
+  	j readinput       # go readinput
+end: 	jr $ra            # goto origin point
+
+# function to print number on the console   
+printinput: 	slti $t0, $a2, 1  # if $a2 < 1, goto exit
+           	bne $t0, $0, exit  
+           	
+           	lw $a0, 0($a1)    # print arr[i]
+           	li $v0, 1
+           	syscall
+           	
+            	la $a0, prompt    # print a prompt
+            	li $v0, 4
+            	syscall
+           
+           	addi $a1, $a1, 4  # increase address of arr by 4
+           	addi $a2, $a2, -1 # decrease a2 by 1
+           	  
+           	j printinput      # go loop
+exit: 	jr $ra            # jump to origin
