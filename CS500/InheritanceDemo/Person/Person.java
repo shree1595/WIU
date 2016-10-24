@@ -1,20 +1,28 @@
 /*
- * Example : Program that illustrates inheritance in java using person class
+ *    This file is to define Person class 
  */
 
 public class Person {
-	String FirstName;
-    String LastName;
+	
+	protected String firstname;                       //first name of person
+	protected String lastname;                        //last name of person
+	
+	/*
+	 * Constructor with two parameters
+	 */
+	public Person(String first, String last)
+	{
+		firstname = first;
+		lastname = last;		
+	}
+	
+	/*
+	 * Override toString function
+	 */
+	public String toString()
+	{
+		return "My name is " + firstname + " " + lastname;
+	}
+	
 
-    Person(String fName, String lName)
-    {
-             FirstName = fName;
-             LastName = lName;
-     }
-
-     void Display()
-     {
-           System.out.println("First Name : " + FirstName);
-           System.out.println("Last Name : " + LastName);
-      }
 }

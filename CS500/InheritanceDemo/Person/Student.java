@@ -1,19 +1,25 @@
+/*
+ *    This file is to define student class 
+ */
 
 public class Student extends Person {
-	 int id;
-     String standard;    
- 
-     Student(String fName, String lName, int nId, String stnd)
-     {
-          super(fName,lName);
-          id = nId;
-          standard = stnd;                
-      }
-     void Display()
-     {
-            super.Display();
-            System.out.println("ID : " + id);
-            System.out.println("Standard : " + standard);            
-     }
-
+  
+	protected int id;                           //student id
+	protected String level;                     //graduate or undergraduate
+	
+	/*
+	 * Constructor with four parameters
+	 */
+	public Student (String first, String last, int index, String l) 
+	{
+		super(first, last);                      // invoke constructor of superclass
+		id = index;
+		level = l;
+	}
+	
+	public String toString()                     // override toString() of superclass
+	{
+		return super.toString() + " with id: " + id + " and level: " + level;
+	}
+	
 }
