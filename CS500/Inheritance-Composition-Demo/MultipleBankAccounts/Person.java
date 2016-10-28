@@ -41,7 +41,7 @@ public class Person {
     	}
     	
     	System.out.println("The Saving accounts are as follows: ");
-    	for (int i = 0; i < chkAcc.length; i++)
+    	for (int i = 0; i < savAcc.length; i++)
     	{
     		System.out.println(savAcc[i]);
     	}    	
